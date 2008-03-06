@@ -2,8 +2,13 @@ Python FogBugz API Wrapper
 
 This Python API is simply a wrapper around the FogBugz API, with some help from Leonard Richardson's BeautifulSoup (http://www.crummy.com/software/BeautifulSoup/) and the magic of Python's __getattr__().
 
-A quick example:
+Getting Started:
+To use the FogBugz API, just put the file fogbugz.py somewhere on your Python path.  It's probably easiest to add this before the import:
+>>> import sys
+>>> sys.path.append("""c:\code\fbapi""")
+>>> from fogbugz import FogBugz
 
+A Quick Example:
 >>> from fogbugz import FogBugz
 >>> fb = FogBugz("http://example.fogbugz.com/") # URL is to your FogBugz install
 >>> fb.logon("logon@example.com", "password")
@@ -26,7 +31,7 @@ edit,spam,assign,resolve,reply,forward,remind
 >>> resp
 <response><case ixbug="1" operations="edit,assign,resolve,email,remind"></case></response>
 
-For more info on the API
+For more info on the API:
 http://our.fogbugz.com/help/topics/advanced/API.html
 
 Known Issues:
