@@ -1,17 +1,15 @@
+import urllib
 import urllib2
 
 from BeautifulSoup import BeautifulSoup
 
 class FogBugzAPIError(Exception):
-    def __init__(self, response):
-        self.response = response
-        self.message = response.error.string
-        self.error_code = int(response.error['code'])
+    pass
 
 class FogBugzLogonError(FogBugzAPIError):
     pass
 
-class FogBugzConnectionError(Exception):
+class FogBugzConnectionError(FogBugzAPIError):
     pass
 
 class FogBugz:
@@ -54,20 +52,15 @@ class FogBugz:
         self._token = None
 
     def __makerequest(self, cmd, **kwargs):
-        data = 'cmd=%s' % (cmd,)
-        for k in kwargs.keys():
-            data += '&%s=%s' % (k, kwargs[k],)
+        kwargs["cmd"] = cmd
         if self._token:
-            data += '&token=%s' % (self._token,)
+            kwargs["token"] = self._token
         try:
-            response = BeautifulSoup(self._opener.open(self._url+data)).response
+            response = BeautifulSoup(self._opener.open(self._url+urllib.urlencode(kwargs))).response
         except urllib2.URLError, e:
             raise FogBugzConnectionError(e)
         if response.error:
-            print response
-            raise FogBugzAPIError(response)
-        # TODO: Remove print for Release
-        print response
+            raise FogBugzAPIError('Error Code %s: %s' % (response.error['code'], response.error.string,))
         return response
 
     def __getattr__(self, name):
