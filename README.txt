@@ -8,8 +8,10 @@ A quick example:
 >>> fb = FogBugz("http://example.fogbugz.com/") # URL is to your FogBugz install
 >>> fb.logon("logon@example.com", "password")
 >>> resp = fb.search(q="assignedto:tyler") # All calls take named parameters, per the API
->>> resp # Responses are BeautifulSoup objects of the response XML
+>>> resp # Responses are BeautifulSoup objects of the response XML.
 <response><cases count="2"><case ixbug="1" operations="edit,assign,resolve,email,remind"></case><case ixbug="2" operations="edit,spam,assign,resolve,reply,forward,remind"></case></cases></response>
+>>> # You shouldn't need to know too much about BeautifulSoup, but the documentation can be found here:
+>>> # http://www.crummy.com/software/BeautifulSoup/documentation.html
 >>> for case in resp.cases.childGenerator(): # One way to access the cases
 ...     print case['ixbug']
 ...
