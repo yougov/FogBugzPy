@@ -22,7 +22,7 @@ A Quick Example:
 ...
 1
 2
->>> for case in resp.findAll('case'):
+>>> for case in resp.findAll('case'): # Another way to access the cases
 ...     print case['operations']
 ...
 edit,assign,resolve,email,remind
