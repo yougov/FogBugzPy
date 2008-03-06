@@ -27,7 +27,7 @@ A Quick Example:
 ...
 edit,assign,resolve,email,remind
 edit,spam,assign,resolve,reply,forward,remind
->>> resp = fb.edit(ixbug=1, sEvent="Edit from the API")
+>>> resp = fb.edit(ixbug=1, sEvent="Edit from the API") # Note the named parameters
 >>> resp
 <response><case ixbug="1" operations="edit,assign,resolve,email,remind"></case></response>
 
