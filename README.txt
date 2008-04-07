@@ -31,6 +31,8 @@ edit,spam,assign,resolve,reply,forward,remind
 >>> resp
 <response><case ixbug="1" operations="edit,assign,resolve,email,remind"></case></response>
 
+Note that, per API v5.0, all data between tags, such as the token, is now wrapped in CDATA.  BeautifulSoup's implementation of CData generally allows for it to be treated as a string, except for one important case: CData.__str__() (a.k.a. str(CData)) returns the full text, including the CDATA wrapper (e.g. "<![CDATA[foo]]>").  To avoid accidentally including the CDATA tage, use CData.encode('utf-8')
+
 For more info on the API:
 http://our.fogbugz.com/help/topics/advanced/API.html
 

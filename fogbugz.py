@@ -1,7 +1,7 @@
 import urllib
 import urllib2
 
-from BeautifulSoup import BeautifulSoup
+from BeautifulSoup import BeautifulSoup, CData
 
 class FogBugzAPIError(Exception):
     pass
@@ -17,9 +17,9 @@ class FogBugz:
         self.__handlerCache = {}
         if not url.endswith('/'):
             url += '/'
-            
+
         self._token = None
-        self._opener = urllib2.build_opener()        
+        self._opener = urllib2.build_opener()
         try:
             soup = BeautifulSoup(self._opener.open(url + 'api.xml'))
         except URLError:
@@ -31,18 +31,18 @@ class FogBugz:
         """
         Logs the user on to FogBugz.
 
-        Returns None for a successful login, otherwise returns a list
-        of logins to choose from if the username provided is
-        ambiguous.
+        Returns None for a successful login.
         """
         if self._token:
-            logoff()
+            self.logoff()
         try:
             response = self.__makerequest('logon', email=username, password=password)
         except FogBugzAPIError, e:
             raise FogBugzLogonError(e)
         
         self._token = response.token.string
+        if type(self._token) == CData:
+                self._token = self._token.encode('utf-8')
         
     def logoff(self):
         """
@@ -80,4 +80,4 @@ class FogBugz:
                 return self.__makerequest(name, **kwargs)
             self.__handlerCache[name] = handler
         return self.__handlerCache[name]
-        
+
