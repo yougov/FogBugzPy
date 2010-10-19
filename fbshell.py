@@ -106,8 +106,8 @@ class Shell(cmd.Cmd):
 
     def do_filter(self, line):
         if len(line) == 0:
+            pass
             
-
     def do_filters(self, line):
         r = self._fb.listFilters()
         for filter in r.findAll('filter'):
