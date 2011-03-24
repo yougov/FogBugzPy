@@ -13,16 +13,20 @@ class FogBugzConnectionError(FogBugzAPIError):
     pass
 
 class FogBugz:
-    def __init__(self, url):
+    def __init__(self, url, token=None):
         self.__handlerCache = {}
         if not url.endswith('/'):
             url += '/'
 
-        self._token = None
+        if token:
+            self._token =  token.encode('utf-8')
+        else:
+            self_token = None
+
         self._opener = urllib2.build_opener()
         try:
             soup = BeautifulSoup(self._opener.open(url + 'api.xml'))
-        except urllib2.URLError:
+        except URLError:
             raise FogBugzConnectionError("Library could not connect to the FogBugz API.  Either this installation of FogBugz does not support the API, or the url, %s, is incorrect." % (self._url,))
         self._url = url + soup.response.url.string
         self.currentFilter = None
@@ -51,14 +55,25 @@ class FogBugz:
         self.__makerequest('logoff')
         self._token = None
 
+    def token(self,token):
+        """
+        Set the token without actually logging on.  More secure.
+        """
+        self._token = token.encode('utf-8')
+
     def __makerequest(self, cmd, **kwargs):
         kwargs["cmd"] = cmd
         if self._token:
             kwargs["token"] = self._token
+
         try:
-            response = BeautifulSoup(self._opener.open(self._url+urllib.urlencode(kwargs))).response
+            response = BeautifulSoup(self._opener.open(self._url+urllib.urlencode(dict([k, v.encode('utf-8') if isinstance(v,basestring) else v ] for k, v in kwargs.items())))).response
         except urllib2.URLError, e:
             raise FogBugzConnectionError(e)
+        except UnicodeDecodeError, e:
+          print kwargs
+          raise
+
         if response.error:
             raise FogBugzAPIError('Error Code %s: %s' % (response.error['code'], response.error.string,))
         return response
@@ -80,4 +95,5 @@ class FogBugz:
                 return self.__makerequest(name, **kwargs)
             self.__handlerCache[name] = handler
         return self.__handlerCache[name]
+
 
