@@ -2,7 +2,7 @@ from distutils.core import setup
 
 setup(name='fogbugz',
       version='0.9.0',
-      py_modules=['fogbugz']
+      py_modules=['fogbugz'],
       description='Python library for interacting with the FogBugz API',
       author='Tyler Hicks-Wright',
       author_email='customer-service@fogcreek.com',
