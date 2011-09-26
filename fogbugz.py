@@ -1,7 +1,7 @@
 import urllib
 import urllib2
 
-from BeautifulSoup.BeautifulSoup import BeautifulSoup, CData
+from BeautifulSoup import BeautifulSoup, CData
 
 class FogBugzAPIError(Exception):
     pass
