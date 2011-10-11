@@ -1,4 +1,4 @@
-from distutils.core import setup
+from setuptools import setup
 
 setup(name='fogbugz',
       version='0.9.0',
@@ -11,4 +11,4 @@ setup(name='fogbugz',
       url='https://developers.kilnhg.com/Repo/FogBugz/Group/FogBugzPy',
       download_url='https://developers.kilnhg.com/Repo/FogBugz/Group/FogBugzPy',
       install_requires=['BeautifulSoup==3.2'],
-      )
+)
