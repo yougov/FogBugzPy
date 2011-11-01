@@ -65,6 +65,10 @@ setup(name='fogbugz',
           >>> resp = fb.edit(ixbug=1, sEvent="Edit from the API") # Note the named parameters
           >>> resp
           <response><case ixbug="1" operations="edit,assign,resolve,email,remind"></case></response>
+          >>> # To upload files, just pass a `Files` parameter that is a dictionary of filename and file handle. New in 0.9.2.
+          >>> resp = fb.edit(ixbug=2, sEvent="Add a file from the API", Files={'filename': open('filename', 'r')}) # Note the named parameters
+          >>> resp
+          <response><case ixbug="2" operations="edit,assign,resolve,email,remind"></case></response>
 
         Note that, per API v5.0, all data between tags, such as the token, is now wrapped in CDATA.  BeautifulSoup's implementation of CData generally allows for it to be treated as a string, except for one important case: CData.__str__() (a.k.a. str(CData)) returns the full text, including the CDATA wrapper (e.g. "<![CDATA[foo]]>").  To avoid accidentally including the CDATA tage, use CData.encode('utf-8')
 
