@@ -5,7 +5,7 @@ from setuptools import setup
 from textwrap import dedent
 
 setup(name='fogbugz',
-      version='0.9.2',
+      version='0.9.3',
       py_modules=['fogbugz'],
       license=dedent("""\
         Copyright (c) 2011, Fog Creek Software, Inc.
