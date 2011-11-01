@@ -1,5 +1,7 @@
 import urllib
 import urllib2
+import mimetools
+from StringIO import StringIO
 
 from BeautifulSoup import BeautifulSoup, CData
 
@@ -19,9 +21,9 @@ class FogBugz:
             url += '/'
 
         if token:
-            self._token =  token.encode('utf-8')
+            self._token = token.encode('utf-8')
         else:
-            self_token = None
+            self._token = None
 
         self._opener = urllib2.build_opener()
         try:
@@ -61,13 +63,53 @@ class FogBugz:
         """
         self._token = token.encode('utf-8')
 
+    def __encode_multipart_formdata(self, fields, files):
+        """
+        fields is a sequence of (key, value) elements for regular form fields.
+        files is a sequence of (filename, filehandle) files to be uploaded
+        returns (content_type, body)
+        """
+        BOUNDARY = mimetools.choose_boundary()
+
+        if len(files) > 0:
+            fields['nFileCount'] = str(len(files))
+
+        crlf = '\r\n'
+        buf = StringIO()
+
+        for k, v in fields.items():
+            print("field: %s: %s"% (repr(k), repr(v)))
+            buf.write(crlf.join([ '--' + BOUNDARY, 'Content-disposition: form-data; name="%s"' % k, '', v, '' ]))
+        
+        n = 0
+        for f, h in files.items():
+            n += 1
+            buf.write(crlf.join([ '--' + BOUNDARY, 'Content-disposition: form-data; name="File%d"; filename="%s"' % ( n, f), '' ]))
+            buf.write(crlf.join([ 'Content-type: application/octet-stream', '', '' ]))
+            buf.write(h.read())
+            buf.write(crlf)
+        
+        buf.write('--' + BOUNDARY + '--' + crlf) 
+        content_type = "multipart/form-data; boundary=%s" % BOUNDARY
+        return content_type, buf.getvalue()
+
     def __makerequest(self, cmd, **kwargs):
         kwargs["cmd"] = cmd
         if self._token:
             kwargs["token"] = self._token
-
+        
+        fields = dict([k, v.encode('utf-8') if isinstance(v,basestring) else v] for k, v in kwargs.items())
+        files = fields.get('Files', {})
+        if 'Files' in fields:
+            del fields['Files']
+       
+        content_type, body = self.__encode_multipart_formdata(fields, files)
+        headers = { 'Content-Type': content_type,
+                    'Content-Length': str(len(body))}
+ 
         try:
-            response = BeautifulSoup(self._opener.open(self._url+urllib.urlencode(dict([k, v.encode('utf-8') if isinstance(v,basestring) else v ] for k, v in kwargs.items())))).response
+            request = urllib2.Request(self._url, body, headers)
+            response = BeautifulSoup(self._opener.open(request)).response
         except urllib2.URLError, e:
             raise FogBugzConnectionError(e)
         except UnicodeDecodeError, e:
