@@ -4,7 +4,7 @@ use_setuptools()
 from setuptools import setup
 
 setup(name='fogbugz',
-      version='0.9.1',
+      version='0.9.2',
       py_modules=['fogbugz'],
       description='Python library for interacting with the FogBugz API',
       author='Tyler G. Hicks-Wright',
