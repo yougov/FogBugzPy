@@ -1,9 +1,10 @@
-import urllib
 import urllib2
 import mimetools
 from StringIO import StringIO
 
 from BeautifulSoup import BeautifulSoup, CData
+
+DEBUG = False # Set to True for debugging output.
 
 class FogBugzAPIError(Exception):
     pass
@@ -28,8 +29,8 @@ class FogBugz:
         self._opener = urllib2.build_opener()
         try:
             soup = BeautifulSoup(self._opener.open(url + 'api.xml'))
-        except URLError:
-            raise FogBugzConnectionError("Library could not connect to the FogBugz API.  Either this installation of FogBugz does not support the API, or the url, %s, is incorrect." % (self._url,))
+        except (urllib2.URLError, urllib2.HTTPError), e:
+            raise FogBugzConnectionError("Library could not connect to the FogBugz API.  Either this installation of FogBugz does not support the API, or the url, %s, is incorrect.\n\nError: %s" % (self._url, e))
         self._url = url + soup.response.url.string
         self.currentFilter = None
 
@@ -78,8 +79,9 @@ class FogBugz:
         buf = StringIO()
 
         for k, v in fields.items():
-            print("field: %s: %s"% (repr(k), repr(v)))
-            buf.write(crlf.join([ '--' + BOUNDARY, 'Content-disposition: form-data; name="%s"' % k, '', v, '' ]))
+            if DEBUG:
+                print("field: %s: %s"% (repr(k), repr(v)))
+            buf.write(crlf.join([ '--' + BOUNDARY, 'Content-disposition: form-data; name="%s"' % k, '', str(v), '' ]))
         
         n = 0
         for f, h in files.items():
