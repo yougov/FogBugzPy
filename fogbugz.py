@@ -110,7 +110,7 @@ class FogBugz:
                     'Content-Length': str(len(body))}
  
         try:
-            request = urllib2.Request(self._url, body, headers)
+            request = urllib2.Request(self._url.encode('utf-8'), body, headers)
             response = BeautifulSoup(self._opener.open(request)).response
         except urllib2.URLError, e:
             raise FogBugzConnectionError(e)
