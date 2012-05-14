@@ -31,3 +31,12 @@ Once you're added, do the following to get your changes published:
     
  6. Go to http://pypi.python.org/pypi?%3Aaction=pkg_edit&name=fogbugz to
     verify that the package has been uploaded correctly.
+    
+ 7. Although not related to PyPi, it's also helpful to update the Win32 binary
+    distribution at https://developers.fogbugz.com/default.asp?W197. You can
+    run the following command to get a win32 installer:
+    
+    > python setup.py bdist_wininst --plat-name=win32
+    
+    This will create a new file in the \dist directory. Edit the wiki page
+    and add the attachment in the "Install FogBugzPy.exe" section.
