@@ -1,7 +1,11 @@
-from ez_setup import use_setuptools
-use_setuptools()
+try:
+  from ez_setup import use_setuptools
+  use_setuptools()
 
-from setuptools import setup
+  from setuptools import setup
+except ImportError:
+  from distutils.core import setup
+
 from textwrap import dedent
 
 setup(name='fogbugz',
