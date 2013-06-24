@@ -96,7 +96,7 @@ setup(name='fogbugz',
       maintainer_email='customer-service@fogcreek.com',
       url='https://developers.kilnhg.com/Repo/FogBugz/Group/FogBugzPy',
       download_url='https://developers.kilnhg.com/Repo/FogBugz/Group/FogBugzPy',
-      install_requires=['BeautifulSoup==3.2'],
+      install_requires=['BeautifulSoup4'],
       requires='BeautifulSoup',
       classifiers=[
           'Development Status :: 5 - Production/Stable',
