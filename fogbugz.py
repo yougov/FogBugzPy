@@ -129,7 +129,10 @@ class FogBugz:
                     'Content-Length': str(len(body))}
 
         try:
-            request = urllib_request.Request(self._url, body, headers)
+            url = self._url
+            if sys.version_info() < (3,):
+                url = self._url.encode('utf-8')
+            request = urllib_request.Request(url, body, headers)
             response = BeautifulSoup(self._opener.open(request)).response
         except urllib_request.URLError:
             e = sys.exc_info()[1]
