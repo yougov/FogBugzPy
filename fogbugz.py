@@ -8,9 +8,9 @@ try:
 except ImportError:
     import urllib2 as urllib_request
 try:
-    from io import StringIO
+    from io import BytesIO
 except ImportError:
-    from StringIO import StringIO
+    from StringIO import StringIO as BytesIO
 
 try:
     basestring
@@ -93,22 +93,22 @@ class FogBugz:
             fields['nFileCount'] = str(len(files))
 
         crlf = '\r\n'
-        buf = StringIO()
+        buf = BytesIO()
 
         for k, v in fields.items():
             if DEBUG:
                 print("field: %s: %s"% (repr(k), repr(v)))
-            buf.write(crlf.join([ '--' + BOUNDARY, 'Content-disposition: form-data; name="%s"' % k, '', str(v), '' ]))
+            buf.write(crlf.join([ '--' + BOUNDARY, 'Content-disposition: form-data; name="%s"' % k, '', v, '' ]).encode('utf-8'))
 
         n = 0
         for f, h in files.items():
             n += 1
-            buf.write(crlf.join([ '--' + BOUNDARY, 'Content-disposition: form-data; name="File%d"; filename="%s"' % ( n, f), '' ]))
-            buf.write(crlf.join([ 'Content-type: application/octet-stream', '', '' ]))
-            buf.write(h.read())
-            buf.write(crlf)
+            buf.write(crlf.join([ '--' + BOUNDARY, 'Content-disposition: form-data; name="File%d"; filename="%s"' % ( n, f), '' ]).encode('utf-8'))
+            buf.write(crlf.join([ 'Content-type: application/octet-stream', '', '' ]).encode('utf-8'))
+            buf.write(h.read().encode('utf-8'))
+            buf.write(crlf.encode('utf-8'))
 
-        buf.write('--' + BOUNDARY + '--' + crlf)
+        buf.write(('--' + BOUNDARY + '--' + crlf).encode('utf-8'))
         content_type = "multipart/form-data; boundary=%s" % BOUNDARY
         return content_type, buf.getvalue()
 
@@ -117,17 +117,19 @@ class FogBugz:
         if self._token:
             kwargs["token"] = self._token
 
-        fields = dict([k, v.encode('utf-8') if isinstance(v,basestring) else v] for k, v in kwargs.items())
+        fields = kwargs
         files = fields.get('Files', {})
         if 'Files' in fields:
             del fields['Files']
 
         content_type, body = self.__encode_multipart_formdata(fields, files)
+        if DEBUG:
+            print(body)
         headers = { 'Content-Type': content_type,
                     'Content-Length': str(len(body))}
 
         try:
-            request = urllib_request.Request(self._url.encode('utf-8'), body, headers)
+            request = urllib_request.Request(self._url, body, headers)
             response = BeautifulSoup(self._opener.open(request)).response
         except urllib_request.URLError:
             e = sys.exc_info()[1]
