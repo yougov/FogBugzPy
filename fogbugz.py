@@ -158,7 +158,7 @@ class FogBugz:
         if name.startswith("__"):
             raise AttributeError("No such attribute '%s'" % name)
 
-        if not self.__handlerCache.has_key(name):
+        if name not in self.__handlerCache:
             def handler(**kwargs):
                 return self.__makerequest(name, **kwargs)
             self.__handlerCache[name] = handler
