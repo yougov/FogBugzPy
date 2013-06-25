@@ -133,7 +133,8 @@ class FogBugz:
             if sys.version_info < (3,):
                 url = self._url.encode('utf-8')
             request = urllib_request.Request(url, body, headers)
-            response = BeautifulSoup(self._opener.open(request)).response
+            resp_stream = self._opener.open(request)
+            response = BeautifulSoup(resp_stream, "xml").response
         except urllib_request.URLError:
             e = sys.exc_info()[1]
             raise FogBugzConnectionError(e)
