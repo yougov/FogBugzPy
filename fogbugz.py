@@ -37,7 +37,7 @@ class FogBugz:
             url += '/'
 
         if token:
-            self._token = token.encode('utf-8')
+            self._token = token
         else:
             self._token = None
 
@@ -79,7 +79,7 @@ class FogBugz:
         """
         Set the token without actually logging on.  More secure.
         """
-        self._token = token.encode('utf-8')
+        self._token = token
 
     def __encode_multipart_formdata(self, fields, files):
         """
