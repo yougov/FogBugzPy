@@ -98,13 +98,31 @@ class FogBugz:
         for k, v in fields.items():
             if DEBUG:
                 print("field: %s: %s"% (repr(k), repr(v)))
-            buf.write(crlf.join([ '--' + BOUNDARY, 'Content-disposition: form-data; name="%s"' % k, '', v, '' ]).encode('utf-8'))
+            lines = [
+                '--' + BOUNDARY,
+                'Content-disposition: form-data; name="%s"' % k,
+                '',
+                v,
+                '',
+            ]
+            buf.write(crlf.join(lines).encode('utf-8'))
 
         n = 0
         for f, h in files.items():
             n += 1
-            buf.write(crlf.join([ '--' + BOUNDARY, 'Content-disposition: form-data; name="File%d"; filename="%s"' % ( n, f), '' ]).encode('utf-8'))
-            buf.write(crlf.join([ 'Content-type: application/octet-stream', '', '' ]).encode('utf-8'))
+            lines = [
+                '--' + BOUNDARY,
+                'Content-disposition: form-data; name="File%d"; '
+                    'filename="%s"' % (n, f),
+                '',
+            ]
+            buf.write(crlf.join(lines).encode('utf-8'))
+            lines = [
+                'Content-type: application/octet-stream',
+                '',
+                '',
+            ]
+            buf.write(crlf.join(lines).encode('utf-8'))
             buf.write(h.read().encode('utf-8'))
             buf.write(crlf.encode('utf-8'))
 
