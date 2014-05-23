@@ -102,7 +102,7 @@ class FogBugz:
                 '--' + BOUNDARY,
                 'Content-disposition: form-data; name="%s"' % k,
                 '',
-                v,
+                str(v),
                 '',
             ]
             buf.write(crlf.join(lines).encode('utf-8'))
