@@ -99,6 +99,7 @@ setup(name='fogbugz',
       install_requires=[
           'BeautifulSoup4',
           'lxml',
+          'six',
       ],
       requires='BeautifulSoup',
       classifiers=[
