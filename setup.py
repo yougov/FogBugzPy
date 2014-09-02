@@ -9,7 +9,7 @@ except ImportError:
 from textwrap import dedent
 
 setup(name='fogbugz',
-      version='0.9.5',
+      version='0.9.6',
       py_modules=['fogbugz'],
       license=dedent("""\
         Copyright (c) 2011, Fog Creek Software, Inc.
@@ -99,7 +99,7 @@ setup(name='fogbugz',
       maintainer_email='customer-service@fogcreek.com',
       url='https://developers.kilnhg.com/Repo/FogBugz/Group/FogBugzPy',
       download_url='https://developers.kilnhg.com/Repo/FogBugz/Group/FogBugzPy',
-      install_requires=['BeautifulSoup==3.2'],
+      install_requires=['BeautifulSoup>=3.2,<3.3.0'],
       requires='BeautifulSoup',
       classifiers=[
           'Development Status :: 5 - Production/Stable',
