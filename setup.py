@@ -6,7 +6,7 @@ except ImportError:
 from textwrap import dedent
 
 setup(name='fogbugz',
-      version='0.9.5',
+      version='0.9.6',
       py_modules=['fogbugz'],
       license=dedent("""\
         Copyright (c) 2011, Fog Creek Software, Inc.

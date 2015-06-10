@@ -36,7 +36,4 @@ Note that, per API v5.0, all data between tags, such as the token, is now wrappe
 For more info on the API:
 http://our.fogbugz.com/help/topics/advanced/API.html
 
-Known Issues:
-* File uploading is currently unsupported for both cases and emails.
-
-Much of the API has not been thoroughly tested.  Please assign bugs to Tyler Hicks-Wright.
+Much of the API has not been thoroughly tested.  Please report bugs to customer-service@fogcreek.com
