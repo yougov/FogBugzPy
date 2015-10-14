@@ -1,9 +1,7 @@
 import io
 
-try:
-  from setuptools import setup
-except ImportError:
-  from distutils.core import setup
+import setuptools
+
 
 with io.open('README.txt', encoding='utf-8') as readme:
   long_description = readme.read()
@@ -12,7 +10,7 @@ with io.open('LICENSE', encoding='utf-8') as readme:
   license = readme.read()
 
 
-setup(name='fogbugz_bis',
+setuptools.setup(name='fogbugz_bis',
       version='1.0',
       py_modules=['fogbugz'],
       license=license,
