@@ -10,7 +10,7 @@ with io.open('LICENSE', encoding='utf-8') as readme:
     license = readme.read()
 
 
-setuptools.setup(
+setup_params = dict(
     name='fogbugz_bis',
     version='1.0',
     py_modules=['fogbugz'],
@@ -50,3 +50,6 @@ setuptools.setup(
       'setuptools_scm',
     ],
 )
+
+if __name__ == '__main__':
+    setuptools.setup(**setup_params)
