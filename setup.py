@@ -47,4 +47,7 @@ setup(name='fogbugz_bis',
           'Topic :: Software Development :: Version Control',
           'Topic :: Utilities',
       ],
+      setup_requires=[
+        'setuptools_scm',
+      ],
 )
