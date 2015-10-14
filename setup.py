@@ -5,8 +5,8 @@ except ImportError:
 
 from textwrap import dedent
 
-setup(name='fogbugz',
-      version='0.9.6',
+setup(name='fogbugz_bis',
+      version='1.0',
       py_modules=['fogbugz'],
       license=dedent("""\
         Copyright (c) 2011, Fog Creek Software, Inc.
@@ -92,10 +92,9 @@ setup(name='fogbugz',
         """),
       author='Fog Creek Software',
       author_email='customer-service@fogcreek.com',
-      maintainer='Fog Creek Software',
-      maintainer_email='customer-service@fogcreek.com',
-      url='https://developers.kilnhg.com/Repo/FogBugz/Group/FogBugzPy',
-      download_url='https://developers.kilnhg.com/Repo/FogBugz/Group/FogBugzPy',
+      maintainer='YouGov, Plc.',
+      maintainer_email='open-source@yougov.com',
+      url='https://github.com/yougov/FogBugzPy',
       install_requires=[
           'BeautifulSoup4',
           'lxml',
