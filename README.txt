@@ -37,3 +37,7 @@ For more info on the API:
 http://our.fogbugz.com/help/topics/advanced/API.html
 
 Much of the API has not been thoroughly tested.  Please report bugs to customer-service@fogcreek.com
+
+``fogbugz_bis`` is a fork of the FogCreek codebase to support Python 3 and
+BeautifulSoup 4. You should install/require only one of ``fogbugz`` or
+``fogbugz_bis`` as they both implement the same module.
