@@ -12,7 +12,7 @@ with io.open('LICENSE', encoding='utf-8') as readme:
 
 setup_params = dict(
     name='fogbugz_bis',
-    version='1.0',
+    use_scm_version=True,
     py_modules=['fogbugz'],
     license=license,
     description='Python library for interacting with the FogBugz API',
