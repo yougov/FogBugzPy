@@ -124,7 +124,7 @@ class FogBugz:
                 '',
             ]
             buf.write(crlf.join(lines).encode('utf-8'))
-            buf.write(h.read().encode('utf-8'))
+            buf.write(h.read())
             buf.write(crlf.encode('utf-8'))
 
         buf.write(('--' + BOUNDARY + '--' + crlf).encode('utf-8'))
