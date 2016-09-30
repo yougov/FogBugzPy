@@ -27,7 +27,7 @@ setup_params = dict(
         'lxml',
         'six',
     ],
-    requires='BeautifulSoup',
+    requires=['BeautifulSoup', 'lxml'],
     classifiers=[
         'Development Status :: 5 - Production/Stable',
         'Intended Audience :: Developers',
