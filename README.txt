@@ -43,8 +43,16 @@ A Quick Example:
 
 Note that, per API v5.0, all data between tags, such as the token, is now wrapped in CDATA.  BeautifulSoup's implementation of CData generally allows for it to be treated as a string, except for one important case: CData.__str__() (a.k.a. str(CData)) returns the full text, including the CDATA wrapper (e.g. "<![CDATA[foo]]>").  To avoid accidentally including the CDATA tage, use CData.encode('utf-8')
 
+Additional Details:
+-------------------
+
+If your script requires a certain version of the FogBugz API, make sure to pass it as an argument to the constructor. This will protect you from unexpected differences should we make backwards-incompatible changes.
+
+  >>> from fogbugz import FogBugz
+  >>> fb = FogBugz("http://example.fogbugz.com", api_version=5)
+
 For more info on the API:
-http://our.fogbugz.com/help/topics/advanced/API.html
+http://help.fogcreek.com/the-fogbugz-api
 
 Much of the API has not been thoroughly tested.  Please report bugs to customer-service@fogcreek.com
 
