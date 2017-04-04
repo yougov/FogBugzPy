@@ -11,7 +11,7 @@ with io.open('LICENSE', encoding='utf-8') as readme:
 
 
 setup_params = dict(
-    name='fogbugz_bis',
+    name='fogbugz',
     use_scm_version=True,
     py_modules=['fogbugz'],
     license=license,
@@ -27,7 +27,7 @@ setup_params = dict(
         'lxml',
         'six',
     ],
-    requires='BeautifulSoup',
+    requires=['BeautifulSoup', 'lxml'],
     classifiers=[
         'Development Status :: 5 - Production/Stable',
         'Intended Audience :: Developers',

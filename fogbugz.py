@@ -1,3 +1,4 @@
+from __future__ import print_function
 import sys
 try:
     from email.generator import _make_boundary
@@ -30,8 +31,11 @@ class FogBugzLogonError(FogBugzAPIError):
 class FogBugzConnectionError(FogBugzAPIError):
     pass
 
+class FogBugzAPIVersionError(FogBugzAPIError):
+    pass
+
 class FogBugz:
-    def __init__(self, url, token=None):
+    def __init__(self, url, token=None, api_version=8):
         self.__handlerCache = {}
         if not url.endswith('/'):
             url += '/'
@@ -48,6 +52,20 @@ class FogBugz:
         except (urllib_request.URLError, urllib_request.HTTPError):
             e = sys.exc_info()[1]
             raise FogBugzConnectionError("Library could not connect to the FogBugz API.  Either this installation of FogBugz does not support the API, or the url, %s, is incorrect.\n\nError: %s" % (url, e))
+
+        # check API version
+        self._minversion = int(soup.response.minversion.string)
+        self._maxversion = int(soup.response.version.string)
+        if api_version and type(api_version) is int:
+            if api_version < self._maxversion:
+                print("There is a newer version of the FogBugz API available. Please update to version %d to avoid errors in the future" % self._maxversion, file=sys.stderr)
+            elif api_version > self._maxversion:
+                raise FogBugzAPIVersionError("This script requires API version %d and the maximum version supported by %s is %d." % (api_version, url, self._maxversion))
+            if api_version < self._minversion:
+                raise FogBugzAPIVersionError("This script requires API version %d and the minimum version supported by %s is %d. Please update to use the latest API version" % (api_version, url, self._minversion))
+        else:
+            raise FogBugzAPIVersionError("api_version parameter must be an int")
+
         self._url = url + soup.response.url.string
         self.currentFilter = None
 
