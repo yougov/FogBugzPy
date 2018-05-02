@@ -1,7 +1,0 @@
-syntax: glob
-*.pyc
-*.ini
-*.exe
-build/**
-dist/**
-*.egg-info/**
