@@ -51,7 +51,7 @@ class FogBugz:
             soup = BeautifulSoup(stream, 'xml')
         except (urllib_request.URLError, urllib_request.HTTPError):
             e = sys.exc_info()[1]
-            raise FogBugzConnectionError("Library could not connect to the FogBugz API.  Either this installation of FogBugz does not support the API, or the url, %s, is incorrect.\n\nError: %s" % (self._url, e))
+            raise FogBugzConnectionError("Library could not connect to the FogBugz API.  Either this installation of FogBugz does not support the API, or the url, %s, is incorrect.\n\nError: %s" % (url, e))
 
         # check API version
         self._minversion = int(soup.response.minversion.string)
