@@ -165,6 +165,7 @@ class FogBugz:
         headers = { 'Content-Type': content_type,
                     'Content-Length': str(len(body))}
 
+        headers.update(fields.get('headers', {}))
         try:
             url = self._url
             if sys.version_info < (3,):
