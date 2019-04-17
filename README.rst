@@ -6,11 +6,7 @@ This Python API is simply a wrapper around the FogBugz API, with some help from 
 Getting Started:
 ----------------
 
-To use the FogBugz API, install the package either by downloading the source and running
-
-  $ python setup.py install
-
-or by using pip
+To use the FogBugz API, install the package by using pip
 
   $ pip install fogbugz
 

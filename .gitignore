@@ -1,6 +1,0 @@
-*.pyc
-.eggs
-venv
-build
-dist
-fogbugz.egg-info
