@@ -1,5 +1,5 @@
-1.0.8
-=====
+1.1
+===
 
 Clean up packaging.
 
