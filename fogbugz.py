@@ -212,10 +212,10 @@ class FogBugz:
 
     def __getattr__(self, name):
         """
-        Handle all FogBugz API calls.
+        Handle all FogBugz API calls. Example::
 
-        >>> fb.logon(email@example.com, password)
-        >>> response = fb.search(q="assignedto:email")
+            fb.logon(email@example.com, password)
+            response = fb.search(q="assignedto:email")
         """
 
         # Let's leave the private stuff to Python
