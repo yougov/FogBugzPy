@@ -20,19 +20,24 @@ except NameError:
 
 from bs4 import BeautifulSoup, CData
 
-DEBUG = False # Set to True for debugging output.
+DEBUG = False  # Set to True for debugging output.
+
 
 class FogBugzAPIError(Exception):
     pass
 
+
 class FogBugzLogonError(FogBugzAPIError):
     pass
+
 
 class FogBugzConnectionError(FogBugzAPIError):
     pass
 
+
 class FogBugzAPIVersionError(FogBugzAPIError):
     pass
+
 
 class FogBugz:
     def __init__(self, url, token=None, api_version=8):
@@ -51,20 +56,36 @@ class FogBugz:
             soup = BeautifulSoup(stream, 'xml')
         except (urllib_request.URLError, urllib_request.HTTPError):
             e = sys.exc_info()[1]
-            raise FogBugzConnectionError("Library could not connect to the FogBugz API.  Either this installation of FogBugz does not support the API, or the url, %s, is incorrect.\n\nError: %s" % (url, e))
+            raise FogBugzConnectionError(
+                "Library could not connect to the FogBugz API.  "
+                "Either this installation of FogBugz does not "
+                "support the API, or the url, %s, is incorrect."
+                "\n\nError: %s" % (url, e))
 
         # check API version
         self._minversion = int(soup.response.minversion.string)
         self._maxversion = int(soup.response.version.string)
         if api_version and type(api_version) is int:
             if api_version < self._maxversion:
-                print("There is a newer version of the FogBugz API available. Please update to version %d to avoid errors in the future" % self._maxversion, file=sys.stderr)
+                print(
+                    "There is a newer version of the FogBugz API "
+                    "available. Please update to version %d to "
+                    "avoid errors in the future" % self._maxversion,
+                    file=sys.stderr)
             elif api_version > self._maxversion:
-                raise FogBugzAPIVersionError("This script requires API version %d and the maximum version supported by %s is %d." % (api_version, url, self._maxversion))
+                raise FogBugzAPIVersionError(
+                    "This script requires API version %d and "
+                    "the maximum version supported by %s is %d."
+                    % (api_version, url, self._maxversion))
             if api_version < self._minversion:
-                raise FogBugzAPIVersionError("This script requires API version %d and the minimum version supported by %s is %d. Please update to use the latest API version" % (api_version, url, self._minversion))
+                raise FogBugzAPIVersionError(
+                    "This script requires API version %d and "
+                    "the minimum version supported by %s is %d. "
+                    "Please update to use the latest API version"
+                    % (api_version, url, self._minversion))
         else:
-            raise FogBugzAPIVersionError("api_version parameter must be an int")
+            raise FogBugzAPIVersionError(
+                "api_version parameter must be an int")
 
         self._url = url + soup.response.url.string
         self.currentFilter = None
@@ -78,7 +99,8 @@ class FogBugz:
         if self._token:
             self.logoff()
         try:
-            response = self.__makerequest('logon', email=username, password=password)
+            response = self.__makerequest(
+                'logon', email=username, password=password)
         except FogBugzAPIError:
             e = sys.exc_info()[1]
             raise FogBugzLogonError(e)
@@ -94,7 +116,7 @@ class FogBugz:
         self.__makerequest('logoff')
         self._token = None
 
-    def token(self,token):
+    def token(self, token):
         """
         Set the token without actually logging on.  More secure.
         """
@@ -116,7 +138,7 @@ class FogBugz:
 
         for k, v in fields.items():
             if DEBUG:
-                print("field: %s: %s"% (repr(k), repr(v)))
+                print("field: %s: %s" % (repr(k), repr(v)))
             lines = [
                 '--' + BOUNDARY,
                 'Content-disposition: form-data; name="%s"' % k,
@@ -132,7 +154,7 @@ class FogBugz:
             lines = [
                 '--' + BOUNDARY,
                 'Content-disposition: form-data; name="File%d"; '
-                    'filename="%s"' % (n, f),
+                'filename="%s"' % (n, f),
                 '',
             ]
             buf.write(crlf.join(lines).encode('utf-8'))
@@ -162,8 +184,9 @@ class FogBugz:
         content_type, body = self.__encode_multipart_formdata(fields, files)
         if DEBUG:
             print(body)
-        headers = { 'Content-Type': content_type,
-                    'Content-Length': str(len(body))}
+        headers = {
+            'Content-Type': content_type,
+            'Content-Length': str(len(body))}
 
         headers.update(fields.get('headers', {}))
         try:
@@ -182,7 +205,9 @@ class FogBugz:
             raise
 
         if response.error:
-            raise FogBugzAPIError('Error Code %s: %s' % (response.error['code'], response.error.string,))
+            raise FogBugzAPIError(
+                'Error Code %s: %s'
+                % (response.error['code'], response.error.string,))
         return response
 
     def __getattr__(self, name):
