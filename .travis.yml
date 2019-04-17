@@ -16,7 +16,7 @@ jobs:
     env:
     - TWINE_USERNAME=jaraco
     # TWINE_PASSWORD
-    - secure: ...
+    - secure: AgvBPcHIm/9sjRwCUuhCRJR8FmayJqunXFO46B/f2VqpT3v3JFZUScBQp3hlmDcsKvzfQa5xMFNwfnBZSarZxR257DzIEN7TzOFphEZ+0fn5xk0Ltgh7GhRqvJzDyg6TCXUoAMVAPKGJe5u9/PJL4tm+J1Hvz/ZumWvJ3nLXtBI=
     - TOX_TESTENV_PASSENV="TWINE_USERNAME TWINE_PASSWORD"
     script: tox -e release
 
