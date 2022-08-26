@@ -1,3 +1,10 @@
+v1.2.0
+======
+
+Marked package as deprecated.
+
+Updated packaging.
+
 1.1
 ===
 
