@@ -1,13 +1,18 @@
 .. image:: https://img.shields.io/pypi/v/fogbugz_bis.svg
-   :target: https://pypi.org/project/fogbugz_bis
+   :target: `PyPI link`_
 
 .. image:: https://img.shields.io/pypi/pyversions/fogbugz_bis.svg
+   :target: `PyPI link`_
 
-.. image:: https://img.shields.io/travis/yougov/FogBugzPy/master.svg
-   :target: https://travis-ci.org/yougov/FogBugzPy
+.. _PyPI link: https://pypi.org/project/fogbugz_bis
 
-.. .. image:: https://img.shields.io/appveyor/ci/yougov/FogBugzPy/master.svg
-..    :target: https://ci.appveyor.com/project/yougov/FogBugzPy/branch/master
+.. image:: https://github.com/yougov/FogBugzPy/workflows/Automated%20Tests/badge.svg
+   :target: https://github.com/yougov/FogBugzPy/actions?query=workflow%3A%22Automated+Tests%22
+   :alt: Automated Tests
+
+.. image:: https://img.shields.io/badge/code%20style-black-000000.svg
+   :target: https://github.com/psf/black
+   :alt: Code style: Black
 
 .. .. image:: https://readthedocs.org/projects/fogbugzpy/badge/?version=latest
 ..    :target: https://fogbugzpy.readthedocs.io/en/latest/?badge=latest
