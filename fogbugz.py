@@ -2,17 +2,17 @@ from __future__ import print_function
 import sys
 
 try:
-    from email.generator import _make_boundary
+    from email.generator import _make_boundary  # type: ignore
 except ImportError:
-    from mimetools import choose_boundary as _make_boundary
+    from mimetools import choose_boundary as _make_boundary  # type:ignore
 try:
     import urllib.request as urllib_request
 except ImportError:
-    import urllib2 as urllib_request
+    import urllib2 as urllib_request  # type:ignore
 try:
     from io import BytesIO
 except ImportError:
-    from StringIO import StringIO as BytesIO
+    from StringIO import StringIO as BytesIO  # type:ignore
 
 try:
     basestring
